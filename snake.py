@@ -5,6 +5,7 @@ LEFT = 180
 DOWN = 270
 RIGHT = 0
 
+
 class Snake:
     def __init__(self):
         self.segments = []
@@ -15,21 +16,17 @@ class Snake:
         snake = Turtle("square")
         snake.color("blue")
         snake.penup()
-        self.segments.append(snake)
         snake.goto(position)
+        self.segments.append(snake)
 
     def create_snake(self):
         for position in POSITION:
             self.create_segment(position)
 
-    def get_rid_snake(self):
+    def snake_resets(self):
         for seg_num in self.segments:
             seg_num.teleport(1000, 1000)
-        self.segments.clear()
-
-    def extend(self):
-        """Extend length of our snake """
-        self.create_segment(self.segments[-1].position())
+            self.segments.clear()
 
     def move(self):
         for segment in range(len(self.segments) - 1, 0, -1):
@@ -38,17 +35,21 @@ class Snake:
             self.segments[segment].goto(x_seg, y_seg)
         self.segments[0].forward(20)
 
+    def extend(self):
+        """Extend length of our snake """
+        self.create_segment(self.segments[-1].position())
+
     def up(self):
-        if self.segments[0].heading() != DOWN:
-            self.segments[0].setheading(UP)
+        if self.head.heading() != DOWN:
+            self.head.setheading(UP)
             
     def left(self):
-        if self.segments[0].heading() != RIGHT:
-            self.segments[0].setheading(LEFT)
+        if self.head.heading() != RIGHT:
+            self.head.setheading(LEFT)
     
     def down(self):
-        if self.segments[0].heading() != UP:
-            self.segments[0].setheading(DOWN)
+        if self.head.heading() != UP:
+            self.head.setheading(DOWN)
     
     def right(self):
         if self.segments[0].heading() != LEFT:
