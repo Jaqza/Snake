@@ -1,18 +1,31 @@
 from turtle import Turtle
-score = 0
+
+
 class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
-        self.score = -1
+        self.score = 0
+        with open("hi_score.txt", "r")as file:
+            self.hi_score = int(file.read())
+            file.close()
         self.penup()
         self.hideturtle()
-        self.teleport(0, 370)
-        self.add_point()
+        self.teleport(-370, 370)
+        self.update()
 
-    def game_over(self):
-        self.goto(0, 0)
-        self.write("Game over !!!", False, "center", ("Courier", 18, "normal"))
-    def add_point(self):
+    def update(self):
         self.clear()
+        self.write(f"Score:{self.score} Hi-score:{self.hi_score}", False, "left", ("Courier", 18, "normal"))
+
+    def add_point(self):
         self.score += 1
-        self.write(f"Score : {self.score}", False, "center", ("Courier", 18, "normal"))
+        self.update()
+
+    def new_hi_score(self):
+        self.clear()
+        if self.score > self.hi_score:
+            self.hi_score = self.score
+            with open("hi_score.txt", "w") as file:
+                file.write(f"{self.hi_score}")
+        self.score = 0
+        self.update()
