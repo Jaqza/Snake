@@ -5,30 +5,33 @@ LEFT = 180
 DOWN = 270
 RIGHT = 0
 
-
 class Snake:
     def __init__(self):
         self.segments = []
         self.create_snake()
         self.head = self.segments[0]
 
+    def snake_resets(self):
+        for seg_num in self.segments:
+            seg_num.teleport(1000, 1000)
+        self.segments.clear()
+
+    def create_snake(self):
+        """ It builds 3 segments of a snake on a middle of the window"""
+        for position in POSITION:
+            self.create_segment(position)
+        self.head = self.segments[0]
+
     def create_segment(self, position):
+        """Inner funktion belonging to snake class , do not use it outside """
         snake = Turtle("square")
-        snake.color("blue")
+        snake.color("white")
         snake.penup()
         snake.goto(position)
         self.segments.append(snake)
 
-    def create_snake(self):
-        for position in POSITION:
-            self.create_segment(position)
-
-    def snake_resets(self):
-        for seg_num in self.segments:
-            seg_num.teleport(1000, 1000)
-            self.segments.clear()
-
     def move(self):
+        """ Funktion makes our snake to move."""
         for segment in range(len(self.segments) - 1, 0, -1):
             x_seg = self.segments[segment - 1].xcor()
             y_seg = self.segments[segment - 1].ycor()
