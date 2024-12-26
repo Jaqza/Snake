@@ -1,13 +1,16 @@
 from turtle import Turtle
 
-
 class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
         self.score = 0
-        with open("hi_score.txt", "r")as file:
-            self.hi_score = int(file.read())
-            file.close()
+        self.hi_score = 0
+        try:
+            with open("hi_score.txt", "r")as file:
+                self.hi_score = int(file.read())
+        except FileNotFoundError:
+            with open("hi_score.txt", "w") as data:
+                data.write(str(self.hi_score))
         self.penup()
         self.hideturtle()
         self.teleport(-370, 370)
